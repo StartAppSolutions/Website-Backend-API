@@ -1,7 +1,8 @@
 const express = require("express");
 const app = express();
-const port = 3000;
-
+const port = 4000;
+var cors = require('cors');
+app.use(cors());
 const dotenv = require('dotenv');
 dotenv.config();
 const itemsPool = require('./dbconfig');
@@ -20,8 +21,10 @@ app.get("/hu", async(req, res) => {
 app.get("/create", async(req, res) => {
   var alias = req.headers.alias;
   const website = req.headers.website;
-  const analytics = req.headers.analytics;
+  var analytics = req.headers.analytics;
   const email = req.headers.email;
+  console.log('pp')
+  console.log(analytics)
 
   if(alias==null){
     let tempalias = Math.random().toString(36).slice(2, 8);
@@ -57,7 +60,8 @@ app.get("/create", async(req, res) => {
   const allItemsa = await itemsPool.query(
     "INSERT INTO "+'"public"."Links"'+ "(alias, website, analytics, email) VALUES ('"+alias+"', '"+website+"', '"+analytics+"', '"+email+"')"
   );
-  res.send('Created at: '+alias)
+  console.log('oo')
+  res.json({'link': alias})
 
 
 
