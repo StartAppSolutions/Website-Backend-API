@@ -266,4 +266,11 @@ app.get("/getcustomcount", async(req, res) => {
   );
   res.send(allItems.rowCount.toString())
 })
+app.get('/delete', async(req, res) => {
+  var alias = req.headers.alias;
+  const allItems = await itemsPool.query(
+    "DELETE FROM "+'"public"."Links"'+ " where alias= '"+alias+"'"
+  );
+  res.send('deleted')
+})
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
