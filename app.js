@@ -273,4 +273,12 @@ app.get('/delete', async(req, res) => {
   );
   res.send('deleted')
 })
+app.get('/adduser', async(req, res) => {
+  var email = req.headers.email;
+  var name = req.headers.name;
+  const allItems = await itemsPool.query(
+    "INSERT INTO "+'"public"."Users"'+ "(email, name) VALUES ('"+email+"', '"+name+"')"
+  );
+  res.send('done')
+})
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
